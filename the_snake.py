@@ -3,7 +3,6 @@ from random import choice
 
 import pygame as pg
 
-
 SCREEN_WIDTH, SCREEN_HEIGHT = 640, 480
 GRID_SIZE = 20
 GRID_WIDTH = SCREEN_WIDTH // GRID_SIZE
@@ -21,8 +20,9 @@ SNAKE_COLOR = (0, 255, 0)
 
 SPEED = 20
 
-screen = None
-clock = None
+screen = pg.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+pg.display.set_caption('Змейка')
+clock = pg.time.Clock()
 
 
 class GameObject:
@@ -176,14 +176,7 @@ def handle_keys(game_object):
 
 def main():
     """Запустить главный игровой цикл."""
-    global screen, clock
-
     pg.init()
-    screen = pg.display.set_mode(
-        (SCREEN_WIDTH, SCREEN_HEIGHT)
-    )
-    pg.display.set_caption('Змейка')
-    clock = pg.time.Clock()
 
     snake = Snake()
     apple = Apple(occupied_positions=snake.positions)
@@ -205,7 +198,6 @@ def main():
             if not apple.randomize_position(snake.positions):
                 snake.draw()
                 pg.display.update()
-                print('Победа! Всё поле заполнено.')
                 pg.quit()
                 return
 
